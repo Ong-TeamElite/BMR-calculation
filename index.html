@@ -116,6 +116,10 @@
                             <input type="number" step="0.1" id="bone" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-500 transition">
                         </div>
                     </div>
+                    <div>
+                        <label id="lbl-prysm" class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">PRYSM Score (Optional)</label>
+                        <input type="number" step="1" min="0" id="prysmScore" placeholder="Leave blank if not checked yet" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-500 transition">
+                    </div>
                     <button type="submit" id="btn-submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-medium text-sm rounded-xl py-3 shadow-md hover:shadow-lg transition-all mt-4">
                         Analyze Data & Generate Dashboard
                     </button>
@@ -132,7 +136,7 @@
                 <!-- Dashboard Content (Hidden Initially) -->
                 <div id="dashboard" class="hidden space-y-6">
                     <!-- Section 1: Summary Cards -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
                         <div class="bg-white border border-slate-100 p-6 rounded-2xl shadow-sm relative overflow-hidden">
                             <div class="absolute top-0 left-0 w-2 h-full bg-emerald-500"></div>
                             <h3 id="dash-bmr-eff" class="text-xs font-semibold text-slate-400 uppercase tracking-wider">BMR Efficiency</h3>
@@ -144,6 +148,18 @@
                             <h3 id="dash-daily-left" class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Daily Leftover Energy</h3>
                             <p class="text-3xl font-bold text-slate-900 mt-2" id="out-daily-left">0 kCal</p>
                             <p id="dash-daily-desc" class="text-xs text-slate-400 mt-1">Unspent baseline metabolic gap</p>
+                        </div>
+                        <div class="bg-white border border-slate-100 p-6 rounded-2xl shadow-sm relative overflow-hidden">
+                            <div class="absolute top-0 left-0 w-2 h-full bg-rose-500"></div>
+                            <h3 id="dash-excess-fat" class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Excess Fat Weight</h3>
+                            <p class="text-3xl font-bold text-rose-600 mt-2" id="out-excess-fat">0.00 kg</p>
+                            <p id="dash-excess-fat-desc" class="text-xs text-slate-400 mt-1">Compared with the coaching body-fat target</p>
+                        </div>
+                        <div class="bg-white border border-slate-100 p-6 rounded-2xl shadow-sm relative overflow-hidden">
+                            <div class="absolute top-0 left-0 w-2 h-full bg-cyan-500"></div>
+                            <h3 id="dash-prysm" class="text-xs font-semibold text-slate-400 uppercase tracking-wider">PRYSM Score</h3>
+                            <p class="text-3xl font-bold text-slate-900 mt-2" id="out-prysm">Not checked</p>
+                            <p id="dash-prysm-desc" class="text-xs text-slate-400 mt-1">Optional antioxidant-status measurement</p>
                         </div>
                     </div>
 
@@ -182,6 +198,21 @@
                             <!-- Injected dynamically -->
                         </div>
                     </div>
+
+                    <!-- Section 5: Send to Follow-Up App -->
+                    <div class="bg-white border border-slate-100 rounded-2xl shadow-sm p-6">
+                        <h3 id="dash-next-step" class="text-sm font-bold text-slate-900 uppercase tracking-wider text-slate-400">Next Step</h3>
+                        <p id="dash-next-step-desc" class="text-sm text-slate-500 mt-2">Transfer this scan data to #WeMadeIt Follow Up. The form will be filled automatically.</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5">
+                            <button type="button" id="btn-trme-user" onclick="openFollowUp('TRME_USER')" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl py-3 px-4 shadow-md transition-all">
+                                TRME USER
+                            </button>
+                            <button type="button" id="btn-follow-up" onclick="openFollowUp('FOLLOW_UP')" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl py-3 px-4 shadow-md transition-all">
+                                FOLLOW UP
+                            </button>
+                        </div>
+                        <p id="transfer-note" class="text-xs text-slate-400 mt-3">A new tab will open so this result remains available.</p>
+                    </div>
                 </div>
 
             </div>
@@ -198,6 +229,7 @@
                 date: "Date", name: "Name", age: "Age (Years)", sex: "Sex", weight: "Weight (kg)",
                 fat: "Body Fat %", muscle: "Muscle Mass (kg)", muscleIdx: "Muscle Index", bmr: "BMR (kCal)",
                 bioAge: "Biological Age (Years)", visceral: "Visceral Fat", water: "Water (%)", bone: "Bone Mass (kg)",
+                prysm: "PRYSM Score (Optional)", prysmPlaceholder: "Leave blank if not checked yet",
                 btnSubmit: "Analyze Data & Generate Dashboard",
                 placeholder: "Please enter your metrics on the left to generate the analytical dashboard.",
                 bmrEff: "BMR Efficiency", dailyLeft: "Daily Leftover Energy",
@@ -205,6 +237,10 @@
                 projections: "1-Year Metabolic Forecast", yearlyLeft: "Yearly Excess Energy",
                 weightGain: "Predicted Weight Trajectory", aiTitle: "✨ AI Health Insights",
                 rawData: "Logged Record Details",
+                excessFat: "Excess Fat Weight", excessFatDesc: "Target: Male ≤15% / Female ≤20%",
+                prysmCard: "PRYSM Score", prysmDesc: "Optional antioxidant-status measurement", notChecked: "Not checked",
+                nextStep: "Next Step", nextStepDesc: "Transfer this scan data to #WeMadeIt Follow Up. The form will be filled automatically.",
+                trmeUser: "TRME USER", followUp: "FOLLOW UP", transferNote: "A new tab will open so this result remains available.",
                 gainAlert: "Based on your biological trend line, you run a deficit/gain model showing a trajectory change of ",
                 stableAlert: "Your metabolic output completely offsets your weight variables.",
                 kgYear: "kg over a year layout.",
@@ -217,6 +253,7 @@
                 date: "วันที่", name: "ชื่อ", age: "อายุ (ปี)", sex: "เพศ", weight: "น้ำหนัก (กก.)",
                 fat: "เปอร์เซ็นต์ไขมัน (%)", muscle: "มวลกล้ามเนื้อ (กก.)", muscleIdx: "ดัชนีมวลกล้ามเนื้อ", bmr: "BMR (กิโลแคลอรี)",
                 bioAge: "อายุกายภาพ (ปี)", visceral: "ไขมันในช่องท้อง", water: "เปอร์เซ็นต์น้ำ (%)", bone: "มวลกระดูก (กก.)",
+                prysm: "คะแนน PRYSM (ไม่บังคับ)", prysmPlaceholder: "เว้นว่างได้ หากยังไม่ได้ตรวจ",
                 btnSubmit: "วิเคราะห์ข้อมูลและแสดงผลแดชบอร์ด",
                 placeholder: "กรุณากรอกข้อมูลร่างกายของคุณที่เมนูด้านซ้ายเพื่อแสดงผลการวิเคราะห์แดชบอร์ด",
                 bmrEff: "ประสิทธิภาพ BMR", dailyLeft: "พลังงานเหลือสะสมต่อวัน",
@@ -224,6 +261,10 @@
                 projections: "ประมาณการระบบเผาผลาญใน 1 ปี", yearlyLeft: "พลังงานสะสมส่วนเกินต่อปี",
                 weightGain: "แนวโน้มน้ำหนักตัวใน 1 ปี", aiTitle: "✨ AI วิเคราะห์สุขภาพวิทยาศาสตร์การกีฬา",
                 rawData: "รายละเอียดข้อมูลที่บันทึก",
+                excessFat: "น้ำหนักไขมันส่วนเกิน", excessFatDesc: "เป้าหมาย: ชาย ≤15% / หญิง ≤20%",
+                prysmCard: "คะแนน PRYSM", prysmDesc: "ค่าประเมินสถานะแอนติออกซิแดนท์ (ไม่บังคับ)", notChecked: "ยังไม่ได้ตรวจ",
+                nextStep: "ขั้นตอนต่อไป", nextStepDesc: "ส่งข้อมูลการสแกนไปยัง #WeMadeIt Follow Up ระบบจะกรอกแบบฟอร์มให้อัตโนมัติ",
+                trmeUser: "ผู้ใช้ TRME", followUp: "ติดตามผล", transferNote: "ระบบจะเปิดแท็บใหม่ เพื่อให้ผลหน้านี้ยังคงอยู่",
                 gainAlert: "จากแนวโน้มดัชนีชีวภาพของคุณ ระบบเผาผลาญบ่งชี้ว่าจะมีน้ำหนักเปลี่ยนแปลงประมาณ ",
                 stableAlert: "ระบบเผาผลาญและตัวแปรทางร่างกายอยู่ในสภาวะสมดุลอย่างสมบูรณ์",
                 kgYear: " กก. ภายในระยะเวลาหนึ่งปีข้างหน้าตามการจำลองนี้",
@@ -260,6 +301,8 @@
             document.getElementById('lbl-visceral').innerText = lang.visceral;
             document.getElementById('lbl-water').innerText = lang.water;
             document.getElementById('lbl-bone').innerText = lang.bone;
+            document.getElementById('lbl-prysm').innerText = lang.prysm;
+            document.getElementById('prysmScore').placeholder = lang.prysmPlaceholder;
             document.getElementById('btn-submit').innerText = lang.btnSubmit;
             document.getElementById('txt-placeholder').innerText = lang.placeholder;
             
@@ -273,6 +316,15 @@
             document.getElementById('dash-weight-gain').innerText = lang.weightGain;
             document.getElementById('dash-ai-title').innerText = lang.aiTitle;
             document.getElementById('dash-raw-data').innerText = lang.rawData;
+            document.getElementById('dash-excess-fat').innerText = lang.excessFat;
+            document.getElementById('dash-excess-fat-desc').innerText = lang.excessFatDesc;
+            document.getElementById('dash-prysm').innerText = lang.prysmCard;
+            document.getElementById('dash-prysm-desc').innerText = lang.prysmDesc;
+            document.getElementById('dash-next-step').innerText = lang.nextStep;
+            document.getElementById('dash-next-step-desc').innerText = lang.nextStepDesc;
+            document.getElementById('btn-trme-user').innerText = lang.trmeUser;
+            document.getElementById('btn-follow-up').innerText = lang.followUp;
+            document.getElementById('transfer-note').innerText = lang.transferNote;
         }
 
         function calculateMetrics(event) {
@@ -280,7 +332,9 @@
             
             const sex = document.getElementById('sex').value;
             const weight = parseFloat(document.getElementById('weight').value);
+            const bodyFat = parseFloat(document.getElementById('fat').value);
             const bmr = parseFloat(document.getElementById('bmr').value);
+            const prysmScore = document.getElementById('prysmScore').value.trim();
             
             // Formula Logic matching provided guidelines
             // Male benchmark factor: 24, Female benchmark factor: 21.6
@@ -292,13 +346,19 @@
             const yearlyLeftEnergy = dailyLeftEnergy * 365;
             const weightGainYear = yearlyLeftEnergy / 7700;
 
+            // Coaching body-fat targets requested for this app:
+            // Male <= 15%, Female <= 20%.
+            // Divide the percentage-point difference by 100 to convert it to kilograms.
+            const bodyFatTarget = sex === 'Male' ? 15 : 20;
+            const excessFatWeight = Math.max(0, ((bodyFat - bodyFatTarget) / 100) * weight);
+
             activeData = {
                 date: document.getElementById('date').value,
                 name: document.getElementById('name').value,
                 age: document.getElementById('age').value,
                 sex: sex,
                 weight: weight,
-                fat: document.getElementById('fat').value,
+                fat: bodyFat,
                 muscle: document.getElementById('muscle').value,
                 muscleIdx: document.getElementById('muscleIdx').value,
                 bmr: bmr,
@@ -306,6 +366,9 @@
                 visceral: document.getElementById('visceral').value,
                 water: document.getElementById('water').value,
                 bone: document.getElementById('bone').value,
+                prysmScore: prysmScore,
+                bodyFatTarget: bodyFatTarget,
+                excessFatWeight: excessFatWeight,
                 bmrEfficiency: bmrEfficiency,
                 dailyLeftEnergy: dailyLeftEnergy,
                 yearlyLeftEnergy: yearlyLeftEnergy,
@@ -326,6 +389,8 @@
             document.getElementById('out-daily-left').innerText = Math.round(data.dailyLeftEnergy).toLocaleString() + " kCal";
             document.getElementById('out-yearly-left').innerText = Math.round(data.yearlyLeftEnergy).toLocaleString() + " kCal";
             document.getElementById('out-weight-gain').innerText = (data.weightGainYear >= 0 ? "+" : "") + data.weightGainYear.toFixed(2) + " kg";
+            document.getElementById('out-excess-fat').innerText = data.excessFatWeight.toFixed(2) + " kg";
+            document.getElementById('out-prysm').innerText = data.prysmScore !== "" ? data.prysmScore : lang.notChecked;
 
             // Render details list Grid
             const gridHTML = `
@@ -342,6 +407,8 @@
                 <div><span class="text-slate-400 block">${lang.visceral}:</span> <b>${data.visceral}</b></div>
                 <div><span class="text-slate-400 block">${lang.water}:</span> <b>${data.water}%</b></div>
                 <div><span class="text-slate-400 block">${lang.bone}:</span> <b>${data.bone}</b></div>
+                <div><span class="text-slate-400 block">${lang.prysmCard}:</span> <b>${data.prysmScore !== "" ? escapeHTML(data.prysmScore) : lang.notChecked}</b></div>
+                <div><span class="text-slate-400 block">${lang.excessFat}:</span> <b>${data.excessFatWeight.toFixed(2)} kg</b></div>
             `;
             document.getElementById('raw-details-grid').innerHTML = gridHTML;
 
@@ -368,6 +435,19 @@
                     aiText += `<p>🔥 Your metabolic engine shows high adaptation metrics with a <b>BMR efficiency of ${data.bmrEfficiency.toFixed(1)}%</b>. Your cells utilize basic energy at speed.</p>`;
                 }
 
+                // Excess body-fat calculation
+                if (data.excessFatWeight > 0) {
+                    aiText += `<p>🎯 Using the coaching target of <b>${data.bodyFatTarget}% body fat</b>, your calculated <b>excess fat weight is ${data.excessFatWeight.toFixed(2)} kg</b>. This is a coaching estimate, not a medical diagnosis.</p>`;
+                } else {
+                    aiText += `<p>✅ Your body-fat reading is at or below this app's coaching target of <b>${data.bodyFatTarget}%</b>, so excess fat weight is shown as 0 kg.</p>`;
+                }
+
+                if (data.prysmScore !== "") {
+                    aiText += `<p>🔬 Your recorded <b>PRYSM Score is ${escapeHTML(data.prysmScore)}</b>. This app records the score without assigning a range because no interpretation range has been configured.</p>`;
+                } else {
+                    aiText += `<p>🔬 PRYSM Score has not been checked yet. You can leave it blank and add it during follow-up.</p>`;
+                }
+
                 // Prediction analysis
                 if (data.weightGainYear > 0) {
                     aiText += `<p>⚖️ <b>Weight gain forecast:</b> With standard physical stagnation, you will store unutilized energy causing a calculated gain of <b>${data.weightGainYear.toFixed(2)} kg/year</b>. To prevent this, implement a daily caloric restriction or training deficit equal to ${Math.round(data.dailyLeftEnergy)} kCal.</p>`;
@@ -390,6 +470,18 @@
                     aiText += `<p>🔥 การทำงานของเซลล์เผาผลาญพลังงานทำงานได้ดีเยี่ยม มีประสิทธิภาพสูงถึง <b>${data.bmrEfficiency.toFixed(1)}%</b> ร่างกายดึงพลังงานไปใช้ได้รวดเร็ว</p>`;
                 }
 
+                if (data.excessFatWeight > 0) {
+                    aiText += `<p>🎯 เมื่อเทียบกับเป้าหมายไขมันในร่างกาย <b>${data.bodyFatTarget}%</b> ระบบคำนวณว่า <b>มีน้ำหนักไขมันส่วนเกิน ${data.excessFatWeight.toFixed(2)} กก.</b> ค่านี้ใช้เพื่อการโค้ชและไม่ใช่การวินิจฉัยทางการแพทย์</p>`;
+                } else {
+                    aiText += `<p>✅ เปอร์เซ็นต์ไขมันของคุณอยู่ที่หรือต่ำกว่าเป้าหมายของแอป <b>${data.bodyFatTarget}%</b> จึงแสดงน้ำหนักไขมันส่วนเกินเป็น 0 กก.</p>`;
+                }
+
+                if (data.prysmScore !== "") {
+                    aiText += `<p>🔬 คะแนน <b>PRYSM ที่บันทึกไว้คือ ${escapeHTML(data.prysmScore)}</b> แอปจะบันทึกค่าโดยยังไม่แปลผล เนื่องจากยังไม่ได้กำหนดช่วงคะแนน</p>`;
+                } else {
+                    aiText += `<p>🔬 ยังไม่ได้ตรวจ PRYSM สามารถเว้นว่างไว้ก่อน และเพิ่มคะแนนภายหลังในหน้าติดตามผลได้</p>`;
+                }
+
                 if (data.weightGainYear > 0) {
                     aiText += `<p>⚖️ <b>การประเมินแนวโน้มน้ำหนัก:</b> หากไม่มีกิจกรรมทางกายเพิ่มขึ้น พลังงานสะสมส่วนเกินจะส่งผลให้น้ำหนักตัวของคุณเพิ่มขึ้นประมาณ <b>${data.weightGainYear.toFixed(2)} กก. ต่อปี</b> แนะนำให้ควบคุมอาหารหรือออกกำลังกายเพื่อชดเชยพลังงานส่วนเกิน ${Math.round(data.dailyLeftEnergy)} กิโลแคลอรีต่อวัน</p>`;
                 } else {
@@ -400,7 +492,51 @@
             document.getElementById('ai-insight-content').innerHTML = aiText;
         }
 
+        function openFollowUp(followUpType) {
+            if (!activeData) return;
+
+            const followUpUrl = new URL('https://ong-teamelite.github.io/WeMadeIt-Follow-Up/');
+            const values = {
+                source: 'BMR_CALCULATION',
+                followUpType: followUpType,
+                date: activeData.date,
+                name: activeData.name,
+                age: activeData.age,
+                sex: activeData.sex,
+                weight: activeData.weight,
+                bodyFat: activeData.fat,
+                muscleMass: activeData.muscle,
+                muscleMassIndex: activeData.muscleIdx,
+                bmr: activeData.bmr,
+                metabolicAge: activeData.bioAge,
+                visceralFat: activeData.visceral,
+                water: activeData.water,
+                bone: activeData.bone,
+                prysmScore: activeData.prysmScore
+            };
+
+            Object.entries(values).forEach(([key, value]) => {
+                if (value !== undefined && value !== null && String(value).trim() !== '') {
+                    followUpUrl.searchParams.set(key, value);
+                }
+            });
+
+            window.open(followUpUrl.toString(), '_blank', 'noopener,noreferrer');
+        }
+
+        function escapeHTML(value) {
+            return String(value ?? '')
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#039;');
+        }
+
         // Run default set
+        document.getElementById('date').value = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+            .toISOString()
+            .slice(0, 10);
         updateStaticText();
     </script>
 </body>
