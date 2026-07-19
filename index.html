@@ -141,7 +141,7 @@
                 <!-- Dashboard Content (Hidden Initially) -->
                 <div id="dashboard" class="hidden space-y-6">
                     <!-- Section 1: Summary Cards -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
                         <div class="bg-white border border-slate-100 p-6 rounded-2xl shadow-sm relative overflow-hidden">
                             <div class="absolute top-0 left-0 w-2 h-full bg-emerald-500"></div>
                             <h3 id="dash-bmr-eff" class="text-xs font-semibold text-slate-400 uppercase tracking-wider">BMR Efficiency</h3>
@@ -159,6 +159,12 @@
                             <h3 id="dash-excess-fat" class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Excess Fat Weight</h3>
                             <p class="text-3xl font-bold text-rose-600 mt-2" id="out-excess-fat">0.00 kg</p>
                             <p id="dash-excess-fat-desc" class="text-xs text-slate-400 mt-1">Compared with the coaching body-fat target</p>
+                        </div>
+                        <div id="muscle-percent-summary-card" class="bg-white border border-slate-100 p-6 rounded-2xl shadow-sm relative overflow-hidden">
+                            <div id="muscle-percent-accent" class="absolute top-0 left-0 w-2 h-full bg-indigo-500"></div>
+                            <h3 id="dash-muscle-percent" class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Muscle Mass %</h3>
+                            <p class="text-3xl font-bold text-slate-900 mt-2" id="out-muscle-percent">0.0%</p>
+                            <p id="dash-muscle-percent-desc" class="text-xs text-slate-400 mt-1">Muscle mass divided by body weight</p>
                         </div>
                         <div id="prysm-summary-card" class="bg-white border border-slate-100 p-6 rounded-2xl shadow-sm relative overflow-hidden">
                             <div id="prysm-accent-bar" class="absolute top-0 left-0 w-2 h-full bg-cyan-500"></div>
@@ -183,7 +189,35 @@
                         </div>
                     </div>
 
-                    <!-- Section 3: PRYSM Nutritional Wellness Analysis -->
+                    <!-- Section 3: Muscle Mass Percentage Analysis -->
+                    <div id="muscle-detail-card" class="bg-white border border-slate-100 rounded-2xl shadow-sm p-6">
+                        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                            <div>
+                                <h3 id="muscle-analysis-title" class="text-sm font-bold text-slate-900 uppercase tracking-wider">Muscle Mass Percentage Analysis</h3>
+                                <p id="muscle-detail-intro" class="text-sm text-slate-500 mt-2">Calculated as muscle mass ÷ body weight × 100.</p>
+                            </div>
+                            <span id="muscle-zone-badge" class="inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-bold bg-slate-100 text-slate-700 whitespace-nowrap">—</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
+                            <div class="rounded-xl border border-slate-100 bg-slate-50 p-4">
+                                <h4 id="muscle-meaning-title" class="text-xs font-bold text-slate-500 uppercase tracking-wider">Your result and ranges</h4>
+                                <div id="muscle-meaning" class="text-sm text-slate-700 mt-2 leading-relaxed"></div>
+                            </div>
+                            <div class="rounded-xl border border-slate-100 bg-slate-50 p-4">
+                                <h4 id="muscle-factors-title" class="text-xs font-bold text-slate-500 uppercase tracking-wider">Key influencing factors</h4>
+                                <div id="muscle-factors" class="text-sm text-slate-700 mt-2 leading-relaxed"></div>
+                            </div>
+                            <div class="rounded-xl border border-slate-100 bg-slate-50 p-4">
+                                <h4 id="muscle-plan-title" class="text-xs font-bold text-slate-500 uppercase tracking-wider">Coaching focus</h4>
+                                <div id="muscle-plan" class="text-sm text-slate-700 mt-2 leading-relaxed"></div>
+                            </div>
+                        </div>
+
+                        <p id="muscle-disclaimer" class="text-xs text-slate-400 mt-4">These are coaching ranges supplied for this app. Interpret the percentage together with age, body fat, training history, and changes over time.</p>
+                    </div>
+
+                    <!-- Section 4: PRYSM Nutritional Wellness Analysis -->
                     <div id="prysm-detail-card" class="bg-white border border-slate-100 rounded-2xl shadow-sm p-6">
                         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                             <div>
@@ -211,7 +245,7 @@
                         <p id="prysm-disclaimer" class="text-xs text-slate-400 mt-4">PRYSM is a nutritional wellness and trend-tracking tool. It does not diagnose disease or replace blood tests or medical care.</p>
                     </div>
 
-                    <!-- Section 4: AI Analysis Insights -->
+                    <!-- Section 5: AI Analysis Insights -->
                     <div class="bg-gradient-to-br from-brand-900 to-slate-900 text-white rounded-2xl shadow-xl p-6 relative overflow-hidden">
                         <div class="absolute top-0 right-0 p-4 opacity-10">
                             <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm1 10h3l-4-5-4 5h3v4h2v-4z"/></svg>
@@ -224,7 +258,7 @@
                         </div>
                     </div>
 
-                    <!-- Section 5: All Input Details -->
+                    <!-- Section 6: All Input Details -->
                     <div class="bg-white border border-slate-100 rounded-2xl shadow-sm p-6">
                         <h3 id="dash-raw-data" class="text-sm font-bold text-slate-900 mb-4 uppercase tracking-wider text-slate-400">Logged Record Details</h3>
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm" id="raw-details-grid">
@@ -232,7 +266,7 @@
                         </div>
                     </div>
 
-                    <!-- Section 6: Send to Follow-Up App -->
+                    <!-- Section 7: Send to Follow-Up App -->
                     <div class="bg-white border border-slate-100 rounded-2xl shadow-sm p-6">
                         <h3 id="dash-next-step" class="text-sm font-bold text-slate-900 uppercase tracking-wider text-slate-400">Next Step</h3>
                         <p id="dash-next-step-desc" class="text-sm text-slate-500 mt-2">Transfer this scan data to #WeMadeIt Follow Up. The form will be filled automatically.</p>
@@ -271,6 +305,11 @@
                 weightGain: "Predicted Weight Trajectory", aiTitle: "✨ AI Health Insights",
                 rawData: "Logged Record Details",
                 excessFat: "Excess Fat Weight", excessFatDesc: "Target: Male ≤15% / Female ≤20%",
+                musclePercent: "Muscle Mass %", musclePercentDesc: "Muscle mass divided by body weight",
+                muscleAnalysisTitle: "Muscle Mass Percentage Analysis", muscleMeaningTitle: "Your result and ranges",
+                muscleFactorsTitle: "Key influencing factors", musclePlanTitle: "Coaching focus",
+                muscleDetailIntro: "Calculated as muscle mass ÷ body weight × 100.",
+                muscleDisclaimer: "These are coaching ranges supplied for this app. Interpret the percentage together with age, body fat, training history, and changes over time.",
                 prysmCard: "PRYSM Score", prysmDesc: "Skin carotenoid and antioxidant-status indicator", notChecked: "Not checked",
                 bmi: "BMI", prysmAnalysisTitle: "PRYSM Nutritional Wellness Analysis", prysmMeaningTitle: "What the score means",
                 prysmActionsTitle: "Priority habits", prysmFollowupTitle: "Rescan plan",
@@ -299,6 +338,11 @@
                 weightGain: "แนวโน้มน้ำหนักตัวใน 1 ปี", aiTitle: "✨ AI วิเคราะห์สุขภาพวิทยาศาสตร์การกีฬา",
                 rawData: "รายละเอียดข้อมูลที่บันทึก",
                 excessFat: "น้ำหนักไขมันส่วนเกิน", excessFatDesc: "เป้าหมาย: ชาย ≤15% / หญิง ≤20%",
+                musclePercent: "เปอร์เซ็นต์มวลกล้ามเนื้อ", musclePercentDesc: "มวลกล้ามเนื้อหารด้วยน้ำหนักตัว",
+                muscleAnalysisTitle: "วิเคราะห์เปอร์เซ็นต์มวลกล้ามเนื้อ", muscleMeaningTitle: "ผลลัพธ์และช่วงอ้างอิง",
+                muscleFactorsTitle: "ปัจจัยสำคัญที่มีผล", musclePlanTitle: "แนวทางการโค้ช",
+                muscleDetailIntro: "คำนวณจากมวลกล้ามเนื้อ ÷ น้ำหนักตัว × 100",
+                muscleDisclaimer: "ช่วงเหล่านี้เป็นเกณฑ์สำหรับการโค้ชที่กำหนดให้แอปนี้ ควรดูร่วมกับอายุ ไขมันในร่างกาย ประวัติการฝึก และแนวโน้มการเปลี่ยนแปลง",
                 prysmCard: "คะแนน PRYSM", prysmDesc: "ตัวชี้วัดแคโรทีนอยด์ในผิวและสถานะแอนติออกซิแดนท์", notChecked: "ยังไม่ได้ตรวจ",
                 bmi: "BMI", prysmAnalysisTitle: "วิเคราะห์สุขภาวะทางโภชนาการจาก PRYSM", prysmMeaningTitle: "คะแนนบอกอะไร",
                 prysmActionsTitle: "พฤติกรรมที่ควรเน้น", prysmFollowupTitle: "แผนตรวจซ้ำ",
@@ -360,6 +404,14 @@
             document.getElementById('dash-raw-data').innerText = lang.rawData;
             document.getElementById('dash-excess-fat').innerText = lang.excessFat;
             document.getElementById('dash-excess-fat-desc').innerText = lang.excessFatDesc;
+            document.getElementById('dash-muscle-percent').innerText = lang.musclePercent;
+            document.getElementById('dash-muscle-percent-desc').innerText = lang.musclePercentDesc;
+            document.getElementById('muscle-analysis-title').innerText = lang.muscleAnalysisTitle;
+            document.getElementById('muscle-meaning-title').innerText = lang.muscleMeaningTitle;
+            document.getElementById('muscle-factors-title').innerText = lang.muscleFactorsTitle;
+            document.getElementById('muscle-plan-title').innerText = lang.musclePlanTitle;
+            document.getElementById('muscle-detail-intro').innerText = lang.muscleDetailIntro;
+            document.getElementById('muscle-disclaimer').innerText = lang.muscleDisclaimer;
             document.getElementById('dash-prysm').innerText = lang.prysmCard;
             document.getElementById('dash-prysm-desc').innerText = lang.prysmDesc;
             document.getElementById('prysm-analysis-title').innerText = lang.prysmAnalysisTitle;
@@ -382,10 +434,12 @@
             const height = parseFloat(document.getElementById('height').value);
             const weight = parseFloat(document.getElementById('weight').value);
             const bodyFat = parseFloat(document.getElementById('fat').value);
+            const muscleMass = parseFloat(document.getElementById('muscle').value);
             const bmr = parseFloat(document.getElementById('bmr').value);
             const prysmScore = document.getElementById('prysmScore').value.trim();
             const heightMeters = height / 100;
             const bmi = heightMeters > 0 ? weight / (heightMeters * heightMeters) : 0;
+            const muscleMassPercent = weight > 0 ? (muscleMass / weight) * 100 : 0;
             
             // Formula Logic matching provided guidelines
             // Male benchmark factor: 24, Female benchmark factor: 21.6
@@ -412,7 +466,8 @@
                 weight: weight,
                 bmi: bmi,
                 fat: bodyFat,
-                muscle: document.getElementById('muscle').value,
+                muscle: muscleMass,
+                muscleMassPercent: muscleMassPercent,
                 muscleIdx: document.getElementById('muscleIdx').value,
                 bmr: bmr,
                 bioAge: document.getElementById('bioAge').value,
@@ -444,6 +499,11 @@
             document.getElementById('out-yearly-left').innerText = Math.round(data.yearlyLeftEnergy).toLocaleString() + " kCal";
             document.getElementById('out-weight-gain').innerText = (data.weightGainYear >= 0 ? "+" : "") + data.weightGainYear.toFixed(2) + " kg";
             document.getElementById('out-excess-fat').innerText = data.excessFatWeight.toFixed(2) + " kg";
+            const muscleInfo = getMuscleMassInterpretation(data, currentLang);
+            document.getElementById('out-muscle-percent').innerText = data.muscleMassPercent.toFixed(1) + "%";
+            document.getElementById('dash-muscle-percent-desc').innerText = `${muscleInfo.category} • ${muscleInfo.range}`;
+            document.getElementById('muscle-percent-accent').style.background = muscleInfo.color;
+            document.getElementById('out-muscle-percent').style.color = muscleInfo.color;
             document.getElementById('out-prysm').innerText = prysm.checked ? `${prysm.score} / 1200` : lang.notChecked;
             document.getElementById('dash-prysm-desc').innerText = prysm.checked ? `${prysm.zone} • ${prysm.gradeLabel}` : lang.prysmDesc;
             document.getElementById('prysm-accent-bar').style.background = prysm.color;
@@ -458,7 +518,8 @@
                 <div><span class="text-slate-400 block">${lang.height}:</span> <b>${data.height} cm</b></div>
                 <div><span class="text-slate-400 block">${lang.weight}:</span> <b>${data.weight}</b></div>
                 <div><span class="text-slate-400 block">${lang.fat}:</span> <b>${data.fat}%</b></div>
-                <div><span class="text-slate-400 block">${lang.muscle}:</span> <b>${data.muscle}</b></div>
+                <div><span class="text-slate-400 block">${lang.muscle}:</span> <b>${data.muscle} kg</b></div>
+                <div><span class="text-slate-400 block">${lang.musclePercent}:</span> <b>${data.muscleMassPercent.toFixed(1)}% • ${muscleInfo.category}</b></div>
                 <div><span class="text-slate-400 block">${lang.muscleIdx}:</span> <b>${data.muscleIdx}</b></div>
                 <div><span class="text-slate-400 block">${lang.bmr}:</span> <b>${data.bmr}</b></div>
                 <div><span class="text-slate-400 block">${lang.bioAge}:</span> <b>${data.bioAge}</b></div>
@@ -470,6 +531,7 @@
                 <div><span class="text-slate-400 block">${lang.excessFat}:</span> <b>${data.excessFatWeight.toFixed(2)} kg</b></div>
             `;
             document.getElementById('raw-details-grid').innerHTML = gridHTML;
+            renderMuscleDetail(data, muscleInfo);
             renderPrysmDetail(data, prysm);
 
             // Run Simulated AI Core Rules
@@ -481,6 +543,9 @@
             if (currentLang === 'en') {
                 aiText += `<p>👋 <b>Hello, ${escapeHTML(data.name)}.</b> Here is your coaching-oriented metabolic breakdown:</p>`;
                 aiText += `<p>📏 At <b>${data.height} cm</b> and <b>${data.weight} kg</b>, your calculated <b>BMI is ${data.bmi.toFixed(1)}</b>. BMI is a screening ratio and should be read together with body fat and muscle mass.</p>`;
+                const muscleInfo = getMuscleMassInterpretation(data, 'en');
+                aiText += `<p>💪 Your calculated <b>Muscle Mass Percentage is ${data.muscleMassPercent.toFixed(1)}%</b>, classified as <b>${muscleInfo.category}</b> for ${data.sex === 'Male' ? 'men' : 'women'} using this app's coaching ranges (${muscleInfo.range}). It is calculated from muscle mass ÷ body weight × 100.</p>`;
+                aiText += `<p>🧭 Muscle percentage is influenced by hormones, age, body-fat level, and training history. Follow the trend over time rather than relying on one reading.</p>`;
                 
                 // Metabolic age vs standard age
                 if (parseInt(data.bioAge) > parseInt(data.age)) {
@@ -525,6 +590,9 @@
                 // Thai Analysis strings
                 aiText += `<p>👋 <b>สวัสดีคุณ ${escapeHTML(data.name)}</b> นี่คือผลวิเคราะห์เพื่อใช้ในการโค้ชด้านระบบเผาผลาญและองค์ประกอบร่างกาย:</p>`;
                 aiText += `<p>📏 จากส่วนสูง <b>${data.height} ซม.</b> และน้ำหนัก <b>${data.weight} กก.</b> ค่า <b>BMI เท่ากับ ${data.bmi.toFixed(1)}</b> ควรดูร่วมกับเปอร์เซ็นต์ไขมันและมวลกล้ามเนื้อ ไม่ควรใช้ BMI เพียงค่าเดียว</p>`;
+                const muscleInfo = getMuscleMassInterpretation(data, 'th');
+                aiText += `<p>💪 <b>เปอร์เซ็นต์มวลกล้ามเนื้อเท่ากับ ${data.muscleMassPercent.toFixed(1)}%</b> จัดอยู่ในระดับ <b>${muscleInfo.category}</b> สำหรับ${data.sex === 'Male' ? 'ผู้ชาย' : 'ผู้หญิง'} ตามเกณฑ์การโค้ชของแอป (${muscleInfo.range}) คำนวณจากมวลกล้ามเนื้อ ÷ น้ำหนักตัว × 100</p>`;
+                aiText += `<p>🧭 เปอร์เซ็นต์กล้ามเนื้อได้รับอิทธิพลจากฮอร์โมน อายุ ระดับไขมันในร่างกาย และประวัติการฝึก ควรติดตามแนวโน้มระยะยาวมากกว่าตัดสินจากการวัดเพียงครั้งเดียว</p>`;
                 
                 if (parseInt(data.bioAge) > parseInt(data.age)) {
                     aiText += `<p>⚠️ <b>อายุระบบเผาผลาญจาก Tanita (${data.bioAge} ปี)</b> สูงกว่าอายุจริง (${data.age} ปี) ให้ใช้เป็นสัญญาณสำหรับการโค้ชเพื่อทบทวนการฝึกแรงต้าน กิจกรรมประจำวัน การนอน โภชนาการ และแนวโน้มระยะยาว</p>`;
@@ -564,6 +632,94 @@
             }
             
             document.getElementById('ai-insight-content').innerHTML = aiText;
+        }
+
+        function getMuscleMassInterpretation(data, langCode) {
+            const isThai = langCode === 'th';
+            const isMale = data.sex === 'Male';
+            const percentage = Number(data.muscleMassPercent) || 0;
+
+            let level;
+            if (isMale) {
+                if (percentage < 33) level = 'low';
+                else if (percentage < 39) level = 'average';
+                else if (percentage <= 44) level = 'good';
+                else level = 'athletic';
+            } else {
+                if (percentage < 24) level = 'low';
+                else if (percentage < 30) level = 'average';
+                else if (percentage <= 35) level = 'good';
+                else level = 'athletic';
+            }
+
+            const labels = {
+                low: {
+                    en: 'Low', th: 'ต่ำ', color: '#ef4444',
+                    planEn: ['Prioritize progressive resistance training', 'Support training with adequate protein and overall nutrition', 'Protect sleep and recovery', 'Recheck under similar conditions and follow the trend'],
+                    planTh: ['เน้นเวทเทรนนิ่งแบบค่อย ๆ เพิ่มระดับ', 'สนับสนุนการฝึกด้วยโปรตีนและโภชนาการที่เหมาะสม', 'ให้ความสำคัญกับการนอนและการพักฟื้น', 'ตรวจซ้ำในเงื่อนไขใกล้เคียงเดิมและดูแนวโน้ม']
+                },
+                average: {
+                    en: 'Average', th: 'ปานกลาง', color: '#f59e0b',
+                    planEn: ['Continue progressive resistance training', 'Aim to add or preserve lean mass gradually', 'Keep protein, sleep, and recovery consistent', 'Track muscle kilograms and percentage together'],
+                    planTh: ['ฝึกแรงต้านแบบเพิ่มระดับอย่างต่อเนื่อง', 'ค่อย ๆ เพิ่มหรือรักษามวลกล้ามเนื้อ', 'รักษาความสม่ำเสมอของโปรตีน การนอน และการพักฟื้น', 'ติดตามทั้งมวลกล้ามเนื้อเป็นกิโลกรัมและเปอร์เซ็นต์']
+                },
+                good: {
+                    en: 'Good', th: 'ดี', color: '#10b981',
+                    planEn: ['Maintain strength training and daily activity', 'Preserve muscle during fat-loss phases', 'Keep nutrition and recovery consistent', 'Use repeated measurements to confirm progress'],
+                    planTh: ['รักษาการฝึกแรงต้านและกิจกรรมประจำวัน', 'รักษากล้ามเนื้อในช่วงลดไขมัน', 'รักษาความสม่ำเสมอของโภชนาการและการพักฟื้น', 'ใช้การวัดซ้ำเพื่อยืนยันแนวโน้ม']
+                },
+                athletic: {
+                    en: 'Athletic / High', th: 'นักกีฬา / สูง', color: '#6366f1',
+                    planEn: ['Maintain training quality rather than chasing percentage alone', 'Balance hard training with recovery', 'Monitor performance, body fat, and muscle mass together', 'Avoid interpreting one reading as a diagnosis'],
+                    planTh: ['รักษาคุณภาพการฝึกมากกว่าพยายามเพิ่มเปอร์เซ็นต์เพียงอย่างเดียว', 'สร้างสมดุลระหว่างการฝึกหนักและการพักฟื้น', 'ดูสมรรถนะ ไขมัน และมวลกล้ามเนื้อร่วมกัน', 'ไม่ใช้ผลการวัดครั้งเดียวเป็นการวินิจฉัย']
+                }
+            };
+
+            const ranges = isMale
+                ? (isThai ? 'ต่ำ <33% • ปานกลาง 33–<39% • ดี 39–44% • นักกีฬา/สูง >44%' : 'Low <33% • Average 33–<39% • Good 39–44% • Athletic/High >44%')
+                : (isThai ? 'ต่ำ <24% • ปานกลาง 24–<30% • ดี 30–35% • นักกีฬา/สูง >35%' : 'Low <24% • Average 24–<30% • Good 30–35% • Athletic/High >35%');
+
+            const selected = labels[level];
+            return {
+                percentage,
+                level,
+                category: isThai ? selected.th : selected.en,
+                range: ranges,
+                color: selected.color,
+                plan: isThai ? selected.planTh : selected.planEn
+            };
+        }
+
+        function renderMuscleDetail(data, info) {
+            const isThai = currentLang === 'th';
+            const badge = document.getElementById('muscle-zone-badge');
+            badge.textContent = `${data.muscleMassPercent.toFixed(1)}% • ${info.category}`;
+            badge.style.background = `${info.color}18`;
+            badge.style.color = info.color;
+            badge.style.border = `1px solid ${info.color}55`;
+
+            document.getElementById('muscle-detail-intro').innerHTML = isThai
+                ? `มวลกล้ามเนื้อ <b>${data.muscle.toFixed(1)} กก.</b> ÷ น้ำหนัก <b>${data.weight.toFixed(1)} กก.</b> × 100 = <b>${data.muscleMassPercent.toFixed(1)}%</b>`
+                : `Muscle mass <b>${data.muscle.toFixed(1)} kg</b> ÷ weight <b>${data.weight.toFixed(1)} kg</b> × 100 = <b>${data.muscleMassPercent.toFixed(1)}%</b>`;
+
+            document.getElementById('muscle-meaning').innerHTML = `
+                <p><b>${isThai ? 'ระดับ' : 'Category'}: ${escapeHTML(info.category)}</b></p>
+                <p class="mt-2">${escapeHTML(info.range)}</p>
+                <p class="mt-2 text-xs text-slate-500">${isThai ? 'ใช้เกณฑ์แยกตามเพศที่กำหนดสำหรับแอปนี้ และควรติดตามทั้งเปอร์เซ็นต์และมวลกล้ามเนื้อเป็นกิโลกรัม' : 'Uses the sex-specific coaching ranges supplied for this app. Track both percentage and muscle kilograms.'}</p>`;
+
+            const factors = isThai
+                ? [
+                    '<b>ฮอร์โมน:</b> โดยทั่วไปผู้ชายมีเทสโทสเตอโรนสูงกว่า จึงมักมีมวลกล้ามเนื้อมากกว่า',
+                    '<b>อายุ:</b> มวลกล้ามเนื้อมักค่อย ๆ ลดหลังอายุ 30 ปี และอาจลดเร็วขึ้นหลัง 50 ปีหากไม่มีการฝึกแรงต้าน',
+                    '<b>ไขมันเริ่มต้น:</b> กล้ามเนื้อมีความหนาแน่นมากกว่าไขมัน และเมื่อเปอร์เซ็นต์ไขมันต่ำลง สัดส่วนกล้ามเนื้อมักดูสูงขึ้น'
+                ]
+                : [
+                    '<b>Hormones:</b> Men generally have more testosterone, which supports greater overall muscle mass.',
+                    '<b>Age:</b> Muscle mass often declines gradually after 30 and may decline faster after 50 without resistance training.',
+                    '<b>Starting body fat:</b> Muscle is denser than fat, and lower body-fat levels often produce a higher muscle-mass percentage.'
+                ];
+            document.getElementById('muscle-factors').innerHTML = `<ul class="space-y-2">${factors.map(item => `<li>• ${item}</li>`).join('')}</ul>`;
+            document.getElementById('muscle-plan').innerHTML = `<ul class="space-y-2">${info.plan.map(item => `<li>• ${escapeHTML(item)}</li>`).join('')}</ul>`;
         }
 
         function getPrysmInterpretation(scoreValue, langCode) {
@@ -682,6 +838,7 @@
                 weight: activeData.weight,
                 bodyFat: activeData.fat,
                 muscleMass: activeData.muscle,
+                muscleMassPercent: activeData.muscleMassPercent.toFixed(2),
                 muscleMassIndex: activeData.muscleIdx,
                 bmr: activeData.bmr,
                 metabolicAge: activeData.bioAge,
