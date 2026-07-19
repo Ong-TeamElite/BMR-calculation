@@ -7,6 +7,7 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+        window.tailwind = window.tailwind || {};
         tailwind.config = {
             theme: {
                 extend: {
@@ -72,6 +73,10 @@
                             </select>
                         </div>
                     </div>
+                    <div>
+                        <label id="lbl-height" class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Height (cm)</label>
+                        <input type="number" step="0.1" min="50" max="250" id="height" required placeholder="e.g. 170" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-500 transition">
+                    </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label id="lbl-weight" class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Weight (kg)</label>
@@ -118,7 +123,7 @@
                     </div>
                     <div>
                         <label id="lbl-prysm" class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">PRYSM Score (Optional)</label>
-                        <input type="number" step="1" min="0" id="prysmScore" placeholder="Leave blank if not checked yet" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-500 transition">
+                        <input type="number" step="1" min="0" max="1200" id="prysmScore" placeholder="Leave blank if not checked yet" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-brand-500 transition">
                     </div>
                     <button type="submit" id="btn-submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-medium text-sm rounded-xl py-3 shadow-md hover:shadow-lg transition-all mt-4">
                         Analyze Data & Generate Dashboard
@@ -155,8 +160,8 @@
                             <p class="text-3xl font-bold text-rose-600 mt-2" id="out-excess-fat">0.00 kg</p>
                             <p id="dash-excess-fat-desc" class="text-xs text-slate-400 mt-1">Compared with the coaching body-fat target</p>
                         </div>
-                        <div class="bg-white border border-slate-100 p-6 rounded-2xl shadow-sm relative overflow-hidden">
-                            <div class="absolute top-0 left-0 w-2 h-full bg-cyan-500"></div>
+                        <div id="prysm-summary-card" class="bg-white border border-slate-100 p-6 rounded-2xl shadow-sm relative overflow-hidden">
+                            <div id="prysm-accent-bar" class="absolute top-0 left-0 w-2 h-full bg-cyan-500"></div>
                             <h3 id="dash-prysm" class="text-xs font-semibold text-slate-400 uppercase tracking-wider">PRYSM Score</h3>
                             <p class="text-3xl font-bold text-slate-900 mt-2" id="out-prysm">Not checked</p>
                             <p id="dash-prysm-desc" class="text-xs text-slate-400 mt-1">Optional antioxidant-status measurement</p>
@@ -178,7 +183,35 @@
                         </div>
                     </div>
 
-                    <!-- Section 3: AI Analysis Insights -->
+                    <!-- Section 3: PRYSM Nutritional Wellness Analysis -->
+                    <div id="prysm-detail-card" class="bg-white border border-slate-100 rounded-2xl shadow-sm p-6">
+                        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                            <div>
+                                <h3 id="prysm-analysis-title" class="text-sm font-bold text-slate-900 uppercase tracking-wider">PRYSM Nutritional Wellness Analysis</h3>
+                                <p id="prysm-detail-intro" class="text-sm text-slate-500 mt-2">Enter a PRYSM score to see its zone, meaning, and next-step coaching priorities.</p>
+                            </div>
+                            <span id="prysm-zone-badge" class="inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-bold bg-slate-100 text-slate-700 whitespace-nowrap">Not checked</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
+                            <div class="rounded-xl border border-slate-100 bg-slate-50 p-4">
+                                <h4 id="prysm-meaning-title" class="text-xs font-bold text-slate-500 uppercase tracking-wider">What the score means</h4>
+                                <div id="prysm-meaning" class="text-sm text-slate-700 mt-2 leading-relaxed"></div>
+                            </div>
+                            <div class="rounded-xl border border-slate-100 bg-slate-50 p-4">
+                                <h4 id="prysm-actions-title" class="text-xs font-bold text-slate-500 uppercase tracking-wider">Priority habits</h4>
+                                <div id="prysm-actions" class="text-sm text-slate-700 mt-2 leading-relaxed"></div>
+                            </div>
+                            <div class="rounded-xl border border-slate-100 bg-slate-50 p-4">
+                                <h4 id="prysm-followup-title" class="text-xs font-bold text-slate-500 uppercase tracking-wider">Rescan plan</h4>
+                                <div id="prysm-followup" class="text-sm text-slate-700 mt-2 leading-relaxed"></div>
+                            </div>
+                        </div>
+
+                        <p id="prysm-disclaimer" class="text-xs text-slate-400 mt-4">PRYSM is a nutritional wellness and trend-tracking tool. It does not diagnose disease or replace blood tests or medical care.</p>
+                    </div>
+
+                    <!-- Section 4: AI Analysis Insights -->
                     <div class="bg-gradient-to-br from-brand-900 to-slate-900 text-white rounded-2xl shadow-xl p-6 relative overflow-hidden">
                         <div class="absolute top-0 right-0 p-4 opacity-10">
                             <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm1 10h3l-4-5-4 5h3v4h2v-4z"/></svg>
@@ -191,7 +224,7 @@
                         </div>
                     </div>
 
-                    <!-- Section 4: All Input Details -->
+                    <!-- Section 5: All Input Details -->
                     <div class="bg-white border border-slate-100 rounded-2xl shadow-sm p-6">
                         <h3 id="dash-raw-data" class="text-sm font-bold text-slate-900 mb-4 uppercase tracking-wider text-slate-400">Logged Record Details</h3>
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm" id="raw-details-grid">
@@ -199,7 +232,7 @@
                         </div>
                     </div>
 
-                    <!-- Section 5: Send to Follow-Up App -->
+                    <!-- Section 6: Send to Follow-Up App -->
                     <div class="bg-white border border-slate-100 rounded-2xl shadow-sm p-6">
                         <h3 id="dash-next-step" class="text-sm font-bold text-slate-900 uppercase tracking-wider text-slate-400">Next Step</h3>
                         <p id="dash-next-step-desc" class="text-sm text-slate-500 mt-2">Transfer this scan data to #WeMadeIt Follow Up. The form will be filled automatically.</p>
@@ -226,7 +259,7 @@
                 title: "BMR Efficiency & AI Weight Analytics",
                 subtitle: "Track your metabolic health, calculate energy efficiency, and get AI-driven weight management insights.",
                 formHeading: "Input Data",
-                date: "Date", name: "Name", age: "Age (Years)", sex: "Sex", weight: "Weight (kg)",
+                date: "Date", name: "Name", age: "Age (Years)", sex: "Sex", height: "Height (cm)", weight: "Weight (kg)",
                 fat: "Body Fat %", muscle: "Muscle Mass (kg)", muscleIdx: "Muscle Index", bmr: "BMR (kCal)",
                 bioAge: "Biological Age (Years)", visceral: "Visceral Fat", water: "Water (%)", bone: "Bone Mass (kg)",
                 prysm: "PRYSM Score (Optional)", prysmPlaceholder: "Leave blank if not checked yet",
@@ -238,7 +271,11 @@
                 weightGain: "Predicted Weight Trajectory", aiTitle: "✨ AI Health Insights",
                 rawData: "Logged Record Details",
                 excessFat: "Excess Fat Weight", excessFatDesc: "Target: Male ≤15% / Female ≤20%",
-                prysmCard: "PRYSM Score", prysmDesc: "Optional antioxidant-status measurement", notChecked: "Not checked",
+                prysmCard: "PRYSM Score", prysmDesc: "Skin carotenoid and antioxidant-status indicator", notChecked: "Not checked",
+                bmi: "BMI", prysmAnalysisTitle: "PRYSM Nutritional Wellness Analysis", prysmMeaningTitle: "What the score means",
+                prysmActionsTitle: "Priority habits", prysmFollowupTitle: "Rescan plan",
+                prysmDetailIntro: "Enter a PRYSM score to see its zone, meaning, and next-step coaching priorities.",
+                prysmDisclaimer: "PRYSM is a nutritional wellness and trend-tracking tool. It does not diagnose disease or replace blood tests or medical care.",
                 nextStep: "Next Step", nextStepDesc: "Transfer this scan data to #WeMadeIt Follow Up. The form will be filled automatically.",
                 trmeUser: "TRME USER", followUp: "FOLLOW UP", transferNote: "A new tab will open so this result remains available.",
                 gainAlert: "Based on your biological trend line, you run a deficit/gain model showing a trajectory change of ",
@@ -250,7 +287,7 @@
                 title: "ระบบคำนวณประสิทธิภาพ BMR และวิเคราะห์ข้อมูลด้วย AI",
                 subtitle: "ติดตามสุขภาพระบบเผาผลาญ คำนวณประสิทธิภาพการใช้พลังงาน และรับคำแนะนำการคุมน้ำหนักโดย AI",
                 formHeading: "กรอกข้อมูลร่างกาย",
-                date: "วันที่", name: "ชื่อ", age: "อายุ (ปี)", sex: "เพศ", weight: "น้ำหนัก (กก.)",
+                date: "วันที่", name: "ชื่อ", age: "อายุ (ปี)", sex: "เพศ", height: "ส่วนสูง (ซม.)", weight: "น้ำหนัก (กก.)",
                 fat: "เปอร์เซ็นต์ไขมัน (%)", muscle: "มวลกล้ามเนื้อ (กก.)", muscleIdx: "ดัชนีมวลกล้ามเนื้อ", bmr: "BMR (กิโลแคลอรี)",
                 bioAge: "อายุกายภาพ (ปี)", visceral: "ไขมันในช่องท้อง", water: "เปอร์เซ็นต์น้ำ (%)", bone: "มวลกระดูก (กก.)",
                 prysm: "คะแนน PRYSM (ไม่บังคับ)", prysmPlaceholder: "เว้นว่างได้ หากยังไม่ได้ตรวจ",
@@ -262,7 +299,11 @@
                 weightGain: "แนวโน้มน้ำหนักตัวใน 1 ปี", aiTitle: "✨ AI วิเคราะห์สุขภาพวิทยาศาสตร์การกีฬา",
                 rawData: "รายละเอียดข้อมูลที่บันทึก",
                 excessFat: "น้ำหนักไขมันส่วนเกิน", excessFatDesc: "เป้าหมาย: ชาย ≤15% / หญิง ≤20%",
-                prysmCard: "คะแนน PRYSM", prysmDesc: "ค่าประเมินสถานะแอนติออกซิแดนท์ (ไม่บังคับ)", notChecked: "ยังไม่ได้ตรวจ",
+                prysmCard: "คะแนน PRYSM", prysmDesc: "ตัวชี้วัดแคโรทีนอยด์ในผิวและสถานะแอนติออกซิแดนท์", notChecked: "ยังไม่ได้ตรวจ",
+                bmi: "BMI", prysmAnalysisTitle: "วิเคราะห์สุขภาวะทางโภชนาการจาก PRYSM", prysmMeaningTitle: "คะแนนบอกอะไร",
+                prysmActionsTitle: "พฤติกรรมที่ควรเน้น", prysmFollowupTitle: "แผนตรวจซ้ำ",
+                prysmDetailIntro: "กรอกคะแนน PRYSM เพื่อดูโซน ความหมาย และลำดับความสำคัญในการดูแลสุขภาพ",
+                prysmDisclaimer: "PRYSM เป็นเครื่องมือด้านสุขภาวะทางโภชนาการและการติดตามแนวโน้ม ไม่ใช้วินิจฉัยโรค และไม่ทดแทนการตรวจเลือดหรือการดูแลจากแพทย์",
                 nextStep: "ขั้นตอนต่อไป", nextStepDesc: "ส่งข้อมูลการสแกนไปยัง #WeMadeIt Follow Up ระบบจะกรอกแบบฟอร์มให้อัตโนมัติ",
                 trmeUser: "ผู้ใช้ TRME", followUp: "ติดตามผล", transferNote: "ระบบจะเปิดแท็บใหม่ เพื่อให้ผลหน้านี้ยังคงอยู่",
                 gainAlert: "จากแนวโน้มดัชนีชีวภาพของคุณ ระบบเผาผลาญบ่งชี้ว่าจะมีน้ำหนักเปลี่ยนแปลงประมาณ ",
@@ -292,6 +333,7 @@
             document.getElementById('lbl-name').innerText = lang.name;
             document.getElementById('lbl-age').innerText = lang.age;
             document.getElementById('lbl-sex').innerText = lang.sex;
+            document.getElementById('lbl-height').innerText = lang.height;
             document.getElementById('lbl-weight').innerText = lang.weight;
             document.getElementById('lbl-fat').innerText = lang.fat;
             document.getElementById('lbl-muscle').innerText = lang.muscle;
@@ -320,6 +362,12 @@
             document.getElementById('dash-excess-fat-desc').innerText = lang.excessFatDesc;
             document.getElementById('dash-prysm').innerText = lang.prysmCard;
             document.getElementById('dash-prysm-desc').innerText = lang.prysmDesc;
+            document.getElementById('prysm-analysis-title').innerText = lang.prysmAnalysisTitle;
+            document.getElementById('prysm-meaning-title').innerText = lang.prysmMeaningTitle;
+            document.getElementById('prysm-actions-title').innerText = lang.prysmActionsTitle;
+            document.getElementById('prysm-followup-title').innerText = lang.prysmFollowupTitle;
+            document.getElementById('prysm-disclaimer').innerText = lang.prysmDisclaimer;
+            if (!activeData) document.getElementById('prysm-detail-intro').innerText = lang.prysmDetailIntro;
             document.getElementById('dash-next-step').innerText = lang.nextStep;
             document.getElementById('dash-next-step-desc').innerText = lang.nextStepDesc;
             document.getElementById('btn-trme-user').innerText = lang.trmeUser;
@@ -331,10 +379,13 @@
             event.preventDefault();
             
             const sex = document.getElementById('sex').value;
+            const height = parseFloat(document.getElementById('height').value);
             const weight = parseFloat(document.getElementById('weight').value);
             const bodyFat = parseFloat(document.getElementById('fat').value);
             const bmr = parseFloat(document.getElementById('bmr').value);
             const prysmScore = document.getElementById('prysmScore').value.trim();
+            const heightMeters = height / 100;
+            const bmi = heightMeters > 0 ? weight / (heightMeters * heightMeters) : 0;
             
             // Formula Logic matching provided guidelines
             // Male benchmark factor: 24, Female benchmark factor: 21.6
@@ -357,7 +408,9 @@
                 name: document.getElementById('name').value,
                 age: document.getElementById('age').value,
                 sex: sex,
+                height: height,
                 weight: weight,
+                bmi: bmi,
                 fat: bodyFat,
                 muscle: document.getElementById('muscle').value,
                 muscleIdx: document.getElementById('muscleIdx').value,
@@ -383,6 +436,7 @@
 
         function renderDashboard(data) {
             const lang = langPack[currentLang];
+            const prysm = getPrysmInterpretation(data.prysmScore, currentLang);
             
             // Set dynamic metric text values
             document.getElementById('out-bmr-eff').innerText = data.bmrEfficiency.toFixed(2) + "%";
@@ -390,14 +444,18 @@
             document.getElementById('out-yearly-left').innerText = Math.round(data.yearlyLeftEnergy).toLocaleString() + " kCal";
             document.getElementById('out-weight-gain').innerText = (data.weightGainYear >= 0 ? "+" : "") + data.weightGainYear.toFixed(2) + " kg";
             document.getElementById('out-excess-fat').innerText = data.excessFatWeight.toFixed(2) + " kg";
-            document.getElementById('out-prysm').innerText = data.prysmScore !== "" ? data.prysmScore : lang.notChecked;
+            document.getElementById('out-prysm').innerText = prysm.checked ? `${prysm.score} / 1200` : lang.notChecked;
+            document.getElementById('dash-prysm-desc').innerText = prysm.checked ? `${prysm.zone} • ${prysm.gradeLabel}` : lang.prysmDesc;
+            document.getElementById('prysm-accent-bar').style.background = prysm.color;
+            document.getElementById('out-prysm').style.color = prysm.color;
 
             // Render details list Grid
             const gridHTML = `
                 <div><span class="text-slate-400 block">${lang.date}:</span> <b>${data.date}</b></div>
-                <div><span class="text-slate-400 block">${lang.name}:</span> <b>${data.name}</b></div>
+                <div><span class="text-slate-400 block">${lang.name}:</span> <b>${escapeHTML(data.name)}</b></div>
                 <div><span class="text-slate-400 block">${lang.age}:</span> <b>${data.age}</b></div>
                 <div><span class="text-slate-400 block">${lang.sex}:</span> <b>${data.sex === 'Male' ? lang.male : lang.female}</b></div>
+                <div><span class="text-slate-400 block">${lang.height}:</span> <b>${data.height} cm</b></div>
                 <div><span class="text-slate-400 block">${lang.weight}:</span> <b>${data.weight}</b></div>
                 <div><span class="text-slate-400 block">${lang.fat}:</span> <b>${data.fat}%</b></div>
                 <div><span class="text-slate-400 block">${lang.muscle}:</span> <b>${data.muscle}</b></div>
@@ -407,10 +465,12 @@
                 <div><span class="text-slate-400 block">${lang.visceral}:</span> <b>${data.visceral}</b></div>
                 <div><span class="text-slate-400 block">${lang.water}:</span> <b>${data.water}%</b></div>
                 <div><span class="text-slate-400 block">${lang.bone}:</span> <b>${data.bone}</b></div>
-                <div><span class="text-slate-400 block">${lang.prysmCard}:</span> <b>${data.prysmScore !== "" ? escapeHTML(data.prysmScore) : lang.notChecked}</b></div>
+                <div><span class="text-slate-400 block">${lang.bmi}:</span> <b>${data.bmi.toFixed(1)}</b></div>
+                <div><span class="text-slate-400 block">${lang.prysmCard}:</span> <b>${prysm.checked ? `${prysm.score} • ${prysm.zone}` : lang.notChecked}</b></div>
                 <div><span class="text-slate-400 block">${lang.excessFat}:</span> <b>${data.excessFatWeight.toFixed(2)} kg</b></div>
             `;
             document.getElementById('raw-details-grid').innerHTML = gridHTML;
+            renderPrysmDetail(data, prysm);
 
             // Run Simulated AI Core Rules
             generateAIAnalysis(data);
@@ -419,20 +479,21 @@
         function generateAIAnalysis(data) {
             let aiText = "";
             if (currentLang === 'en') {
-                aiText += `<p>👋 <b>Hello, ${data.name}.</b> Here is your algorithmic metabolic breakdown:</p>`;
+                aiText += `<p>👋 <b>Hello, ${escapeHTML(data.name)}.</b> Here is your coaching-oriented metabolic breakdown:</p>`;
+                aiText += `<p>📏 At <b>${data.height} cm</b> and <b>${data.weight} kg</b>, your calculated <b>BMI is ${data.bmi.toFixed(1)}</b>. BMI is a screening ratio and should be read together with body fat and muscle mass.</p>`;
                 
                 // Metabolic age vs standard age
                 if (parseInt(data.bioAge) > parseInt(data.age)) {
-                    aiText += `<p>⚠️ Your <b>Biological Age (${data.bioAge})</b> is trending higher than your physical age (${data.age}). This points to cellular or metabolic optimization latency, often due to low relative muscle work rate.</p>`;
+                    aiText += `<p>⚠️ Your Tanita <b>Metabolic Age (${data.bioAge})</b> is higher than your actual age (${data.age}). Use this as a coaching signal to review resistance training, daily activity, sleep, nutrition, and progress over time.</p>`;
                 } else {
-                    aiText += `<p>✨ Exceptional metric! Your <b>Biological Age (${data.bioAge})</b> is younger than or equal to your physical age. Your body composition is maintaining excellent structural youth.</p>`;
+                    aiText += `<p>✨ Your Tanita <b>Metabolic Age (${data.bioAge})</b> is younger than or equal to your actual age. This is a favorable coaching result; maintain your habits and follow the trend over time.</p>`;
                 }
 
                 // BMR Efficiency insight
                 if (data.bmrEfficiency < 95) {
-                    aiText += `<p>📉 Your <b>BMR Efficiency is sub-optimal at ${data.bmrEfficiency.toFixed(1)}%</b>. This flags a sluggish baseline burn rate relative to total mass. Recommendation: Accelerate heavy compound hypertrophy training to lift baseline skeletal muscle demand.</p>`;
+                    aiText += `<p>📉 This app's <b>BMR Efficiency Index is ${data.bmrEfficiency.toFixed(1)}%</b>, below its 95% coaching reference. Prioritize progressive resistance training, adequate protein and nutrition, daily movement, and recovery.</p>`;
                 } else {
-                    aiText += `<p>🔥 Your metabolic engine shows high adaptation metrics with a <b>BMR efficiency of ${data.bmrEfficiency.toFixed(1)}%</b>. Your cells utilize basic energy at speed.</p>`;
+                    aiText += `<p>🔥 This app's <b>BMR Efficiency Index is ${data.bmrEfficiency.toFixed(1)}%</b>, at or above its coaching reference. Maintain muscle mass, movement, nutrition, and recovery.</p>`;
                 }
 
                 // Excess body-fat calculation
@@ -442,32 +503,39 @@
                     aiText += `<p>✅ Your body-fat reading is at or below this app's coaching target of <b>${data.bodyFatTarget}%</b>, so excess fat weight is shown as 0 kg.</p>`;
                 }
 
-                if (data.prysmScore !== "") {
-                    aiText += `<p>🔬 Your recorded <b>PRYSM Score is ${escapeHTML(data.prysmScore)}</b>. This app records the score without assigning a range because no interpretation range has been configured.</p>`;
+                const prysm = getPrysmInterpretation(data.prysmScore, 'en');
+                if (prysm.checked) {
+                    aiText += `<p>🔬 Your <b>PRYSM Score is ${prysm.score}/1200</b>, in the <b>${prysm.zone}</b> (${prysm.gradeLabel}). ${prysm.summary}</p>`;
+                    aiText += `<p>🥗 <b>PRYSM coaching focus:</b> ${prysm.actions.slice(0, 3).map(escapeHTML).join(' • ')}.</p>`;
+                    if (data.excessFatWeight > 0 || data.bmi >= 25) {
+                        aiText += `<p>🔗 Your body-composition data and PRYSM result should be viewed together as lifestyle coaching signals. Research reports associations between higher scores and healthier body-composition patterns, but this does not prove cause and effect.</p>`;
+                    }
+                    aiText += `<p>📈 Treat this scan as a baseline. Compare weekly or monthly trends using the same finger, similar conditions, and consistent technique.</p>`;
                 } else {
-                    aiText += `<p>🔬 PRYSM Score has not been checked yet. You can leave it blank and add it during follow-up.</p>`;
+                    aiText += `<p>🔬 PRYSM Score has not been checked yet. The field can remain blank; add a baseline score later and follow the trend rather than judging health from one scan.</p>`;
                 }
 
                 // Prediction analysis
                 if (data.weightGainYear > 0) {
-                    aiText += `<p>⚖️ <b>Weight gain forecast:</b> With standard physical stagnation, you will store unutilized energy causing a calculated gain of <b>${data.weightGainYear.toFixed(2)} kg/year</b>. To prevent this, implement a daily caloric restriction or training deficit equal to ${Math.round(data.dailyLeftEnergy)} kCal.</p>`;
+                    aiText += `<p>⚖️ <b>App simulation:</b> The formula converts the calculated energy gap into a weight equivalent of <b>${data.weightGainYear.toFixed(2)} kg/year</b>. This is not a clinical prediction. Use the estimated ${Math.round(data.dailyLeftEnergy)} kCal/day gap only as a coaching prompt to review food intake and activity.</p>`;
                 } else {
-                    aiText += `<p>🛡️ Your caloric conversion rates show zero passive fat gain projections from baseline parameters. You are well-positioned for clean body recomposition.</p>`;
+                    aiText += `<p>🛡️ This app's simulation does not show a positive baseline energy gap. Continue tracking real weight, body fat, muscle mass, food intake, and activity rather than relying on the formula alone.</p>`;
                 }
             } else {
                 // Thai Analysis strings
-                aiText += `<p>👋 <b>สวัสดีคุณ ${data.name}</b> นี่คือผลการวิเคราะห์โครงสร้างระบบเผาผลาญโดยละเอียดของคุณ:</p>`;
+                aiText += `<p>👋 <b>สวัสดีคุณ ${escapeHTML(data.name)}</b> นี่คือผลวิเคราะห์เพื่อใช้ในการโค้ชด้านระบบเผาผลาญและองค์ประกอบร่างกาย:</p>`;
+                aiText += `<p>📏 จากส่วนสูง <b>${data.height} ซม.</b> และน้ำหนัก <b>${data.weight} กก.</b> ค่า <b>BMI เท่ากับ ${data.bmi.toFixed(1)}</b> ควรดูร่วมกับเปอร์เซ็นต์ไขมันและมวลกล้ามเนื้อ ไม่ควรใช้ BMI เพียงค่าเดียว</p>`;
                 
                 if (parseInt(data.bioAge) > parseInt(data.age)) {
-                    aiText += `<p>⚠️ <b>อายุกายภาพของคุณ (${data.bioAge} ปี)</b> สูงกว่าอายุจริง (${data.age} ปี) บ่งชี้ว่าระบบเซลล์เผาผลาญทำงานช้ากว่าเกณฑ์ปกติ แนะนำให้เพิ่มมวลกล้ามเนื้อเพื่อกระตุ้นเตาเผาพลังงาน</p>`;
+                    aiText += `<p>⚠️ <b>อายุระบบเผาผลาญจาก Tanita (${data.bioAge} ปี)</b> สูงกว่าอายุจริง (${data.age} ปี) ให้ใช้เป็นสัญญาณสำหรับการโค้ชเพื่อทบทวนการฝึกแรงต้าน กิจกรรมประจำวัน การนอน โภชนาการ และแนวโน้มระยะยาว</p>`;
                 } else {
-                    aiText += `<p>✨ ยอดเยี่ยมมาก! <b>อายุกายภาพของคุณ (${data.bioAge} ปี)</b> น้อยกว่าหรือเท่ากับอายุจริง แสดงถึงโครงสร้างภายในที่ยังเยาว์วัยและแข็งแรง</p>`;
+                    aiText += `<p>✨ <b>อายุระบบเผาผลาญจาก Tanita (${data.bioAge} ปี)</b> น้อยกว่าหรือเท่ากับอายุจริง เป็นผลเชิงบวกสำหรับการโค้ช ควรรักษาพฤติกรรมและติดตามแนวโน้มต่อเนื่อง</p>`;
                 }
 
                 if (data.bmrEfficiency < 95) {
-                    aiText += `<p>📉 ประสิทธิภาพ <b>BMR ของคุณอยู่ในระดับต่ำกว่าเกณฑ์ (${data.bmrEfficiency.toFixed(1)}%)</b> ระบบเผาผลาญพื้นฐานทำงานช้าเมื่อเทียบกับน้ำหนักตัว แนะนำให้เน้นการออกกำลังกายแบบแรงต้าน (Weight Training)</p>`;
+                    aiText += `<p>📉 <b>ดัชนีประสิทธิภาพ BMR ของแอปเท่ากับ ${data.bmrEfficiency.toFixed(1)}%</b> ต่ำกว่าค่าอ้างอิงสำหรับการโค้ช 95% ควรเน้นเวทเทรนนิ่งแบบเพิ่มระดับ โภชนาการที่เหมาะสม การเคลื่อนไหว และการพักฟื้น</p>`;
                 } else {
-                    aiText += `<p>🔥 การทำงานของเซลล์เผาผลาญพลังงานทำงานได้ดีเยี่ยม มีประสิทธิภาพสูงถึง <b>${data.bmrEfficiency.toFixed(1)}%</b> ร่างกายดึงพลังงานไปใช้ได้รวดเร็ว</p>`;
+                    aiText += `<p>🔥 <b>ดัชนีประสิทธิภาพ BMR ของแอปเท่ากับ ${data.bmrEfficiency.toFixed(1)}%</b> อยู่ที่หรือสูงกว่าค่าอ้างอิงสำหรับการโค้ช ควรรักษามวลกล้ามเนื้อ การเคลื่อนไหว โภชนาการ และการพักฟื้น</p>`;
                 }
 
                 if (data.excessFatWeight > 0) {
@@ -476,20 +544,127 @@
                     aiText += `<p>✅ เปอร์เซ็นต์ไขมันของคุณอยู่ที่หรือต่ำกว่าเป้าหมายของแอป <b>${data.bodyFatTarget}%</b> จึงแสดงน้ำหนักไขมันส่วนเกินเป็น 0 กก.</p>`;
                 }
 
-                if (data.prysmScore !== "") {
-                    aiText += `<p>🔬 คะแนน <b>PRYSM ที่บันทึกไว้คือ ${escapeHTML(data.prysmScore)}</b> แอปจะบันทึกค่าโดยยังไม่แปลผล เนื่องจากยังไม่ได้กำหนดช่วงคะแนน</p>`;
+                const prysm = getPrysmInterpretation(data.prysmScore, 'th');
+                if (prysm.checked) {
+                    aiText += `<p>🔬 คะแนน <b>PRYSM ของคุณคือ ${prysm.score}/1200</b> อยู่ใน <b>${prysm.zone}</b> (${prysm.gradeLabel}) ${prysm.summary}</p>`;
+                    aiText += `<p>🥗 <b>สิ่งที่ควรเน้น:</b> ${prysm.actions.slice(0, 3).map(escapeHTML).join(' • ')}</p>`;
+                    if (data.excessFatWeight > 0 || data.bmi >= 25) {
+                        aiText += `<p>🔗 ควรดูคะแนน PRYSM ร่วมกับองค์ประกอบร่างกายเพื่อใช้วางแผนพฤติกรรม งานวิจัยพบเพียงความสัมพันธ์ระหว่างคะแนนที่สูงกับรูปแบบองค์ประกอบร่างกายที่สมดุลกว่า ไม่ได้ยืนยันเหตุและผล</p>`;
+                    }
+                    aiText += `<p>📈 ให้ใช้ผลครั้งนี้เป็นค่าเริ่มต้น และดูแนวโน้มรายสัปดาห์หรือรายเดือน โดยใช้นิ้วและวิธีตรวจที่สม่ำเสมอ</p>`;
                 } else {
-                    aiText += `<p>🔬 ยังไม่ได้ตรวจ PRYSM สามารถเว้นว่างไว้ก่อน และเพิ่มคะแนนภายหลังในหน้าติดตามผลได้</p>`;
+                    aiText += `<p>🔬 ยังไม่ได้ตรวจ PRYSM สามารถเว้นว่างไว้ก่อน แล้วเพิ่มคะแนนเริ่มต้นภายหลัง โดยควรดูแนวโน้มต่อเนื่องมากกว่าตัดสินสุขภาพจากการตรวจเพียงครั้งเดียว</p>`;
                 }
 
                 if (data.weightGainYear > 0) {
-                    aiText += `<p>⚖️ <b>การประเมินแนวโน้มน้ำหนัก:</b> หากไม่มีกิจกรรมทางกายเพิ่มขึ้น พลังงานสะสมส่วนเกินจะส่งผลให้น้ำหนักตัวของคุณเพิ่มขึ้นประมาณ <b>${data.weightGainYear.toFixed(2)} กก. ต่อปี</b> แนะนำให้ควบคุมอาหารหรือออกกำลังกายเพื่อชดเชยพลังงานส่วนเกิน ${Math.round(data.dailyLeftEnergy)} กิโลแคลอรีต่อวัน</p>`;
+                    aiText += `<p>⚖️ <b>แบบจำลองของแอป:</b> สูตรแปลงช่องว่างพลังงานเป็นค่าน้ำหนักเทียบเท่า <b>${data.weightGainYear.toFixed(2)} กก. ต่อปี</b> ไม่ใช่การทำนายทางคลินิก ให้ใช้ค่า ${Math.round(data.dailyLeftEnergy)} กิโลแคลอรีต่อวันเป็นเพียงจุดเริ่มต้นสำหรับทบทวนอาหารและกิจกรรม</p>`;
                 } else {
-                    aiText += `<p>🛡️ อัตราการแปลงพลังงานของคุณสมบูรณ์ดีมาก ไม่พบแนวโน้มการสะสมไขมันส่วนเกินจากค่าพื้นฐาน เหมาะแก่การพัฒนารูปร่างแบบลีน</p>`;
+                    aiText += `<p>🛡️ แบบจำลองของแอปไม่พบช่องว่างพลังงานพื้นฐานเป็นบวก ควรติดตามน้ำหนัก ไขมัน กล้ามเนื้อ อาหาร และกิจกรรมจริงร่วมกัน ไม่ควรพึ่งสูตรเพียงอย่างเดียว</p>`;
                 }
             }
             
             document.getElementById('ai-insight-content').innerHTML = aiText;
+        }
+
+        function getPrysmInterpretation(scoreValue, langCode) {
+            const isThai = langCode === 'th';
+            const blank = scoreValue === '' || scoreValue === null || scoreValue === undefined;
+            if (blank) {
+                return {
+                    checked: false,
+                    score: null,
+                    zone: isThai ? 'ยังไม่ได้ตรวจ' : 'Not checked',
+                    gradeLabel: isThai ? 'ยังไม่มีเกรด' : 'No grade yet',
+                    range: '—',
+                    color: '#64748b',
+                    summary: isThai
+                        ? 'กรอกคะแนนภายหลังเพื่อสร้างค่าเริ่มต้นและติดตามแนวโน้ม'
+                        : 'Add a score later to establish a baseline and begin trend tracking.',
+                    actions: isThai
+                        ? ['รับประทานผักผลไม้หลากสี', 'นอนให้สม่ำเสมอ', 'ออกกำลังกายและดูแลโภชนาการต่อเนื่อง']
+                        : ['Eat a variety of colorful produce', 'Keep sleep consistent', 'Exercise and maintain consistent nutrition'],
+                    followup: isThai
+                        ? ['ตรวจด้วยนิ้วชี้ขวา', 'เช็ดนิ้วและปล่อยให้แห้ง', 'วางนิ้วเบา ๆ และใช้เงื่อนไขใกล้เคียงเดิม']
+                        : ['Use the right index finger', 'Clean and dry the finger', 'Use gentle pressure and similar conditions']
+                };
+            }
+
+            const score = Math.max(0, Math.min(1200, Math.round(Number(scoreValue) || 0)));
+            const zones = [
+                { max: 199, en: ['Red zone', 'Grade F', '0–199', 'Significant room to strengthen antioxidant and nutritional habits.'], th: ['โซนแดง', 'เกรด F', '0–199', 'ยังมีโอกาสพัฒนาพฤติกรรมด้านโภชนาการและสถานะแอนติออกซิแดนท์ได้มาก'], color: '#ef4444' },
+                { max: 299, en: ['Orange zone', 'Grade D', '200–299', 'Low antioxidant-status range; consistency is the first priority.'], th: ['โซนส้ม', 'เกรด D', '200–299', 'สถานะแอนติออกซิแดนท์อยู่ในช่วงต่ำ ควรเริ่มจากความสม่ำเสมอของพฤติกรรม'], color: '#f97316' },
+                { max: 399, en: ['Yellow zone', 'Grade C', '300–399', 'Developing nutritional status with clear room to improve.'], th: ['โซนเหลือง', 'เกรด C', '300–399', 'สถานะทางโภชนาการกำลังพัฒนาและยังเพิ่มความสม่ำเสมอได้'], color: '#eab308' },
+                { max: 549, en: ['Green zone', 'Grade B', '400–549', 'Good progress; continue building strong daily habits.'], th: ['โซนเขียว', 'เกรด B', '400–549', 'มีความก้าวหน้าที่ดี ควรรักษาและต่อยอดพฤติกรรมประจำวัน'], color: '#22c55e' },
+                { max: 749, en: ['Blue zone', 'Grade A', '550–749', 'High nutritional wellness and antioxidant status.'], th: ['โซนน้ำเงิน', 'เกรด A', '550–749', 'สุขภาวะทางโภชนาการและสถานะแอนติออกซิแดนท์อยู่ในระดับสูง'], color: '#3b82f6' },
+                { max: 999, en: ['Purple zone', 'Grade A+', '750–999', 'Very high nutritional wellness and antioxidant status.'], th: ['โซนม่วง', 'เกรด A+', '750–999', 'สุขภาวะทางโภชนาการและสถานะแอนติออกซิแดนท์อยู่ในระดับสูงมาก'], color: '#a855f7' },
+                { max: 1200, en: ['Platinum zone', 'Highest tier', '1000–1200', 'The highest currently measurable tier.'], th: ['โซนแพลทินัม', 'ระดับสูงสุด', '1000–1200', 'อยู่ในระดับสูงสุดที่ระบบวัดได้ในปัจจุบัน'], color: '#64748b' }
+            ];
+            const selected = zones.find(zone => score <= zone.max) || zones[zones.length - 1];
+            const copy = isThai ? selected.th : selected.en;
+
+            let actions;
+            if (score < 300) {
+                actions = isThai
+                    ? ['เพิ่มผักผลไม้หลากสีและผักใบเขียวเข้ม', 'ลดของทอด เครื่องดื่มหวาน และน้ำตาลแปรรูป', 'นอน 7–8 ชั่วโมงและรักษาเวลานอนให้สม่ำเสมอ', 'ออกกำลังกายเป็นประจำ', 'ใช้ผลิตภัณฑ์เสริมอาหารตามคำแนะนำอย่างสม่ำเสมอ']
+                    : ['Increase colorful fruits, vegetables, and dark leafy greens', 'Reduce fried foods, sugary drinks, and processed sugar', 'Sleep 7–8 hours on a consistent schedule', 'Exercise regularly', 'Follow an appropriate supplement routine consistently'];
+            } else if (score < 550) {
+                actions = isThai
+                    ? ['เพิ่มความหลากหลายของผักผลไม้และธัญพืชไม่ขัดสี', 'รักษาความสม่ำเสมอของการนอนและการออกกำลังกาย', 'ลดของทอดและน้ำตาลเพื่อเลื่อนแนวโน้มขึ้น', 'ตรวจซ้ำเพื่อดูทิศทาง ไม่ยึดติดกับคะแนนวันเดียว']
+                    : ['Increase variety of produce and whole grains', 'Keep sleep and exercise consistent', 'Reduce fried foods and sugar to move the trend upward', 'Rescan for direction rather than judging one day'];
+            } else {
+                actions = isThai
+                    ? ['รักษาพฤติกรรมด้านอาหารและผลิตภัณฑ์เสริมอาหารที่ทำได้ดีอยู่แล้ว', 'รับประทานผักผลไม้อย่างน้อย 4 เสิร์ฟต่อวันและหลากสี', 'รักษาการนอน การออกกำลังกาย และการป้องกันแสงแดด', 'ติดตามแนวโน้มเพื่อรักษาคะแนนในระยะยาว']
+                    : ['Maintain the nutrition and supplement habits already working well', 'Aim for at least four servings of varied fruits and vegetables daily', 'Protect sleep, exercise consistency, and sun exposure', 'Track the trend to maintain performance long term'];
+            }
+
+            const followup = isThai
+                ? ['ใช้เครื่องเดิมและนิ้วชี้ขวาเมื่อเป็นไปได้', 'เช็ดนิ้วด้วยแอลกอฮอล์และรอให้แห้ง', 'วางปลายนิ้วเบา ๆ ไม่กดแรง และอยู่นิ่ง', 'ดูแนวโน้มรายสัปดาห์ ติดตามรายเดือน และทบทวนใหญ่ใน 90 วัน']
+                : ['Use the same device and right index finger when possible', 'Clean the finger with alcohol and let it dry', 'Place the finger gently, avoid excess pressure, and keep still', 'Review weekly trends, monthly follow-up, and a major 90-day check'];
+
+            return {
+                checked: true,
+                score,
+                zone: copy[0],
+                gradeLabel: copy[1],
+                range: copy[2],
+                summary: copy[3],
+                color: selected.color,
+                actions,
+                followup
+            };
+        }
+
+        function renderPrysmDetail(data, prysm) {
+            const isThai = currentLang === 'th';
+            const intro = document.getElementById('prysm-detail-intro');
+            const badge = document.getElementById('prysm-zone-badge');
+
+            if (prysm.checked) {
+                intro.innerHTML = isThai
+                    ? `คะแนน <b>${prysm.score}/1200</b> • ช่วงคะแนน ${prysm.range} • ใช้เป็นค่าเริ่มต้นเพื่อดูแนวโน้มระยะยาว`
+                    : `Score <b>${prysm.score}/1200</b> • Range ${prysm.range} • Use this as a baseline for long-term trend tracking.`;
+                badge.textContent = `${prysm.zone} • ${prysm.gradeLabel}`;
+            } else {
+                intro.textContent = langPack[currentLang].prysmDetailIntro;
+                badge.textContent = langPack[currentLang].notChecked;
+            }
+
+            badge.style.background = `${prysm.color}18`;
+            badge.style.color = prysm.color;
+            badge.style.border = `1px solid ${prysm.color}55`;
+
+            const bodyContext = data && data.excessFatWeight > 0
+                ? (isThai
+                    ? ` ควรดูร่วมกับเปอร์เซ็นต์ไขมันและน้ำหนักไขมันส่วนเกิน ${data.excessFatWeight.toFixed(2)} กก. เพื่อวางแผนปรับพฤติกรรมอย่างค่อยเป็นค่อยไป`
+                    : ` View it together with body-fat percentage and ${data.excessFatWeight.toFixed(2)} kg of calculated excess fat for gradual coaching.`)
+                : '';
+
+            document.getElementById('prysm-meaning').innerHTML = prysm.checked
+                ? `<p><b>${escapeHTML(prysm.summary)}</b>${escapeHTML(bodyContext)}</p><p class="mt-2 text-xs text-slate-500">${isThai ? 'คะแนนสะท้อนแคโรทีนอยด์ในผิว ซึ่งสัมพันธ์กับสถานะแอนติออกซิแดนท์และความสม่ำเสมอด้านโภชนาการ ไม่ใช่การวินิจฉัยโรค' : 'The score reflects skin carotenoids associated with antioxidant and nutritional status; it is not a medical diagnosis.'}</p>`
+                : `<p>${isThai ? 'PRYSM ตรวจระดับแคโรทีนอยด์ในผิวแบบไม่รุกล้ำ ใช้เพื่อสร้างค่าเริ่มต้นและติดตามการเปลี่ยนแปลงของพฤติกรรมด้านโภชนาการ' : 'PRYSM non-invasively measures skin carotenoids to establish a baseline and follow changes in nutritional habits.'}</p>`;
+
+            document.getElementById('prysm-actions').innerHTML = `<ul class="space-y-2">${prysm.actions.slice(0, 5).map(item => `<li>• ${escapeHTML(item)}</li>`).join('')}</ul>`;
+            document.getElementById('prysm-followup').innerHTML = `<ul class="space-y-2">${prysm.followup.map(item => `<li>• ${escapeHTML(item)}</li>`).join('')}</ul>`;
         }
 
         function openFollowUp(followUpType) {
@@ -503,6 +678,7 @@
                 name: activeData.name,
                 age: activeData.age,
                 sex: activeData.sex,
+                height: activeData.height,
                 weight: activeData.weight,
                 bodyFat: activeData.fat,
                 muscleMass: activeData.muscle,
